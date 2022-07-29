@@ -1,1 +1,4 @@
-# employee-mgt-system
+## Employee Management System
+
+Like BambooHR, but cooler :)
+
