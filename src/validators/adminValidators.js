@@ -4,19 +4,23 @@ const registerSchema = Joi.object({
     name: Joi.string().trim().min(2).required(),
     surname: Joi.string().trim().min(2).required(),
     email: Joi.string().email().lowercase().required(),
+    department: Joi.number().required(),
+    title: Joi.string().trim().required(),
+    type: Joi.string().default('ADMIN'),
+    status: Joi.string().trim().valid('ACTIVE', 'AWAY', 'INACTIVE'),
     password: Joi.string().min(5).required()
 });
 
 const loginSchema = Joi.object({
     email: Joi.string().email().lowercase().required(),
-    password: Joi.string().min(5).required()
+    password: Joi.string().required()
 });
 
 const newEmployeeSchema = Joi.object({
     name: Joi.string().trim().required(),
     department: Joi.string().trim().required(),
-    role: Joi.string().trim().required(),
-    level: Joi.number(),
+    title: Joi.string().trim().required(),
+    type: Joi.string().default('USER'),
     email: Joi.string().email().lowercase().required()
 });
 

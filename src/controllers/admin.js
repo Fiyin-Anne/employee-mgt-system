@@ -1,20 +1,10 @@
 // create class adminController
+const { register, login } = require('../services/adminServices');
+const handler = require('../utils/resService');
 
 class Admin {
     constructor() { 
         
-    }
-
-    register = async (req, res) => {
-        let data = req.body;
-
-        // let newAdmin = await 
-    }
-
-    adminLogin = async (req, res) => {
-        let data = req.body;
-
-        // let newAdmin = await
     }
 
     addNewEmployee = async (req, res) => {
