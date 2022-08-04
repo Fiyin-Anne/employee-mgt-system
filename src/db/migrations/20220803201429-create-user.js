@@ -9,32 +9,30 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       surname: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
-        allowNull: false,
         type: Sequelize.STRING
       },
-      type: {
-        allowNull: false,
-        type: Sequelize.ENUM("USER", "ADMIN")
-      },
-      department: {
+      role: {
         type: Sequelize.STRING
       },
       title: {
         type: Sequelize.STRING
       },
+      departmentId: {
+        type: Sequelize.INTEGER
+      },
       status: {
+        type: Sequelize.ENUM('ACTIVE', 'INACTIVE')
+      },
+      accesstk: {
         type: Sequelize.STRING
       },
       createdAt: {

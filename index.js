@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const admin = require('./src/routes/adminRoutes')
 const employee = require('./src/routes/employeeRoutes')
+const auth = require('./src/routes/authRoutes')
 const dotenv = require('dotenv');
 const passport = require('passport');
 const passportinit = require('./config/passport')
@@ -19,12 +20,13 @@ app.get('/', function (req, res) {
   res
   .status(200)
   .json({
-    message: 'Hello World'
+    message: "Welcome."
   })
 })
 
 app.use('/admin', admin);
-// app.use('/employees', employee);
+app.use('/auth', auth);
+app.use('/employees', employee);
 
 app.listen(3000, () => {
   console.log(`Server running at http://${hostname}:${port}/`)

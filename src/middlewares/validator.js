@@ -1,6 +1,6 @@
 const Validator = (schema) => (req, res, next) => {
     const data = {...req.query, ...req.params, ...req.body };
-    const { error } = schema.validate(data);
+    const { error, value } = schema.validate(data);
     if (error) {
         res.status(422)
         .json({
@@ -8,7 +8,8 @@ const Validator = (schema) => (req, res, next) => {
             message: error.details[0].message
         })
     } else {
-      next();
+        req.body = value;
+        next();
     }
 };
 

@@ -12,10 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
+      this.hasMany(models.Timeoff);
+      this.hasOne(models.Salary, {foreignKey: { allowNull: false, name: 'userId'}});
+      this.belongsTo(models.Department, {foreignKey: {allowNull: false, name: 'departmentId' }})
+
     }
 
     static matchPassword = (password, passwordhash) => {
       return new PasswordHash(password, passwordhash).isMatch();
+    };
+
+    static hashPassword = (password) => {
+      return new PasswordHash(password).hashPassword();
     };
 
   }
@@ -37,17 +45,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    type: {
-      type: DataTypes.ENUM("USER", "ADMIN"),
+    role: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'USER'
     },
-    department: {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    departmentId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    title: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    accesstk: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     sequelize,
     modelName: 'User',

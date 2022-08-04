@@ -5,7 +5,7 @@ const jwtsign = (payload) => {
 };
 
 const jwtverify = (token) => {
-    return jwt.sign(token, process.env.JWT_SECRET, { algorithm: process.env.JWT_ALGORITHM })
+    return jwt.verify(token, process.env.JWT_SECRET, { algorithm: process.env.JWT_ALGORITHM } )
 };
 
 module.exports = { jwtsign, jwtverify}

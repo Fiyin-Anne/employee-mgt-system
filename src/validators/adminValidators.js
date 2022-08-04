@@ -1,26 +1,16 @@
 const Joi = require('joi');
 
-const registerSchema = Joi.object({
-    name: Joi.string().trim().min(2).required(),
-    surname: Joi.string().trim().min(2).required(),
-    email: Joi.string().email().lowercase().required(),
-    department: Joi.number().required(),
-    title: Joi.string().trim().required(),
-    type: Joi.string().default('ADMIN'),
-    status: Joi.string().trim().valid('ACTIVE', 'AWAY', 'INACTIVE'),
-    password: Joi.string().min(5).required()
-});
-
-const loginSchema = Joi.object({
-    email: Joi.string().email().lowercase().required(),
-    password: Joi.string().required()
-});
-
 const newEmployeeSchema = Joi.object({
+    salary: Joi.object({
+        monthly: Joi.number().required()
+    }).required(),
+    surname: Joi.string().trim().min(2).required(),
     name: Joi.string().trim().required(),
-    department: Joi.string().trim().required(),
     title: Joi.string().trim().required(),
-    type: Joi.string().default('USER'),
+    status: Joi.string().trim().valid('ACTIVE', 'AWAY', 'INACTIVE').default('ACTIVE'),
+    role: Joi.string().default('USER'),
+    departmentId: Joi.number().required(),
+    password: Joi.string().default('employee'), // employee required to change this within 2 days of being added.
     email: Joi.string().email().lowercase().required()
 });
 
@@ -29,27 +19,28 @@ const deactivateEmployeeSchema = Joi.object({
 });
 
 const viewEmployeeSchema = Joi.object({
-    id: Joi.number().required()
+    employee: Joi.number().required()
 });
 
 const listEmployeesSchema = Joi.object({
-    email: Joi.number().required(),
-    department: Joi.string().trim(),
-    role: Joi.string().trim(),
-    level: Joi.number(),
+    email: Joi.string().email().lowercase(),
+    page: Joi.number().default(1),
+    limit: Joi.number().default(30),
+    departmentId: Joi.number(),
+    role: Joi.string().trim()
 });
 
 const updateEmployeeSchema = Joi.object({
-    email: Joi.number().required(),
+    employee: Joi.number().required(),
+    email: Joi.string().email(),
     name: Joi.string().trim(),
-    department: Joi.string().trim(),
+    surname: Joi.string().trim(),
+    departmentId: Joi.number(),
     role: Joi.string().trim(),
-    level: Joi.number(),
+    title: Joi.string().trim(),
 })
 
 module.exports = {
-    registerSchema,
-    loginSchema,
     newEmployeeSchema,
     deactivateEmployeeSchema,
     viewEmployeeSchema,

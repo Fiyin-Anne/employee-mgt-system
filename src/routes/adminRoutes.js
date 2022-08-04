@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const AdminController = require('../controllers/admin');
+const Admin = require('../controllers/admin');
 const { Validator } = require('../middlewares/validator');
 const AdminSchema = require('../validators/adminValidators');
+const { jwtAuth } = require('../middlewares/auth');
+const { checkAdmin } = require('../middlewares/checkAdmin');
 
-const { registerSchema, loginSchema, newEmployeeSchema, updateEmployeeSchema, viewEmployeeSchema, listEmployeesSchema, deactivateEmployeeSchema} = AdminSchema;
-const { register, adminLogin, addNewEmployee, listEmployees, viewEmployeeDetails, deactivateEmployee, updateEmployeeDetails } = AdminController;
+const { newEmployeeSchema, updateEmployeeSchema, viewEmployeeSchema, listEmployeesSchema, deactivateEmployeeSchema} = AdminSchema;
 
-router.get('/register', Validator(registerSchema), register);
-router.post('/login', Validator(loginSchema), adminLogin);
-router.post('/new-employee', Validator(newEmployeeSchema), addNewEmployee);
-router.post('/deactivate-employee', Validator(deactivateEmployeeSchema), deactivateEmployee);
-router.put('/update-employee', Validator(updateEmployeeSchema), updateEmployeeDetails);
-router.get('/employees', Validator(listEmployeesSchema), listEmployees);
-router.get('/:employee', Validator(viewEmployeeSchema), viewEmployeeDetails)
+router.post('/employees/add', jwtAuth, checkAdmin, Validator(newEmployeeSchema), Admin.addNewEmployee);
+router.post('/employees/deactivate',  jwtAuth, checkAdmin, Validator(deactivateEmployeeSchema), Admin.deactivateEmployee);
+router.get('/employees', jwtAuth, checkAdmin, Validator(listEmployeesSchema), Admin.listEmployees);
+router.get('/employees/:employee',  jwtAuth, checkAdmin, Validator(viewEmployeeSchema), Admin.viewEmployeeDetails);
+router.put('/employees/:employee',  jwtAuth, checkAdmin, Validator(updateEmployeeSchema), Admin.updateEmployeeDetails);
 
 module.exports = router;

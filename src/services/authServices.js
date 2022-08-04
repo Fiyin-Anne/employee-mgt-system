@@ -1,21 +1,13 @@
 const db = require('../db/models/index');
 const PasswordHash = require('../utils/passwordHash');
+const Helpers = require('../utils/helpers/register');
 
-const register = async (data) => {
 
+const register = async (data, config={}) => {
     try {
-        const { email, password } = data;
-
-        //check if email exists in user db
-        const existingUser = await db.User.findOne({ where: { email } });
-        if(existingUser) throw new Error('This user already exists.');
-    
-        // encrypt password
-        const encryptedpassword = await new PasswordHash(password).hashPassword();
-        data.password = encryptedpassword;
-
-        const user = await db.User.create(data);
-        const { id, name, surname, title, department, status } = user;
+        const user = await Helpers.register(data, config);
+        const { id, name, surname, title, email, department, status } = user;
+        
         return {
             id,
             name,
@@ -29,7 +21,6 @@ const register = async (data) => {
         let message = err.message || "Unable to add user."
         throw new Error(message)
     }
-
 }
 
 module.exports = {

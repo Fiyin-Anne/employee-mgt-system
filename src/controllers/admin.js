@@ -1,47 +1,64 @@
 // create class adminController
-const { register, login } = require('../services/adminServices');
+const { addNewEmployee, listEmployees, viewEmployeeDetails, deactivateEmployee, updateEmployeeDetails } = require('../services/adminServices');
 const handler = require('../utils/resService');
 
-class Admin {
-    constructor() { 
-        
-    }
+class AdminController {
+    constructor() { }
 
     addNewEmployee = async (req, res) => {
         let data = req.body;
-
-        // let newAdmin = await 
+        try {
+            let newUser = await addNewEmployee(data);
+            return handler.respS(res, newUser);
+        } catch (err) {
+            return handler.respF(res, null, err.message)
+        }
     }
 
-    deactivateEmployee = (req, res) => {
-        let data = req.body;
+    listEmployees = async(req, res) => {
+        let { body } = req;
 
-        // let newAdmin = await 
+        try {
+            let employees = await listEmployees(body);
+            return handler.respS(res, employees);
+        } catch (err) {
+            return handler.respF(res, null, err.message)
+        }
     }
 
-    listEmployees = (req, res) => {
-        let data = req.body;
+    viewEmployeeDetails = async (req, res) => {
+        let { body } = req;
 
-        // let newAdmin = await 
+        try {
+            let employee = await viewEmployeeDetails(body);
+            return handler.respS(res, employee);
+        } catch (err) {
+            return handler.respF(res, null, err.message)
+        }
     }
 
-    viewEmployeeDetails = (req, res) => {
-        let data = req.body;
+    updateEmployeeDetails = async (req, res) => {
+        let { body } = req;
 
-        // let newAdmin = await 
+        try {
+            let result = await updateEmployeeDetails(body);
+            return handler.respS(res, result);
+        } catch (err) {
+            return handler.respF(res, null, err.message)
+        }
     }
 
-    updateEmployeeDetails = (req, res) => {
-        let data = req.body;
+    deactivateEmployee = async (req, res) => {
+       let { body } = req;
 
-        // let newAdmin = await 
-    }
-    deactivateEmployee = (req, res) => {
-        let data = req.body;
-
-        // let newAdmin = await 
+        try {
+            let result = await deactivateEmployee(body);
+            return handler.respS(res, result);
+        } catch (err) {
+            return handler.respF(res, null, err.message)
+        }
     }
 }
 
-const AdminController = new Admin()
-module.exports = AdminController;
+const Admin = new AdminController()
+module.exports = Admin;
