@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 
 app.use('/admin', admin);
 app.use('/auth', auth);
-app.use('/employees', employee);
+app.use('/employee', employee);
 
 app.listen(3000, () => {
   console.log(`Server running at http://${hostname}:${port}/`)

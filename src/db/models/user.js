@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
-      this.hasMany(models.Timeoff);
+      this.hasMany(models.Timeoff, {foreignKey: { allowNull: false, name: 'userId'}});
       this.hasOne(models.Salary, {foreignKey: { allowNull: false, name: 'userId'}});
       this.belongsTo(models.Department, {foreignKey: {allowNull: false, name: 'departmentId' }})
 
@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    home_address: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
     password: {
       type: DataTypes.STRING,
