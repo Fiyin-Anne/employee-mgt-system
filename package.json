@@ -33,5 +33,10 @@
     "pg-hstore": "^2.3.4",
     "rxjs": "^7.5.6",
     "sequelize": "^6.21.3"
+  },
+  "devDependencies": {
+    "circular-json": "^0.5.9",
+    "i": "^0.3.7",
+    "npm": "^8.16.0"
   }
 }

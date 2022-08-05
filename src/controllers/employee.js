@@ -5,8 +5,9 @@ class EmployeeController {
     constructor() { }
 
     getProfile = async (req, res) => {
-        //check salary, leave status, holiday list
-        console.log(req.user)
+        let data = {};
+        data.userId = req.user?.userId;
+
         try {
             let profile = await getProfile(data);
             return handler.respS(res, profile);

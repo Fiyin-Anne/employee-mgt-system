@@ -1,5 +1,5 @@
 // create class adminController
-const { addNewEmployee, listEmployees, viewEmployeeDetails, deactivateEmployee, updateEmployeeDetails } = require('../services/adminServices');
+const { addNewEmployee, listEmployees, viewEmployeeDetails, deactivateEmployee, updateEmployeeDetails, generateEmployeeReport } = require('../services/adminServices');
 const handler = require('../utils/resService');
 
 class AdminController {
@@ -53,6 +53,17 @@ class AdminController {
 
         try {
             let result = await deactivateEmployee(body);
+            return handler.respS(res, result);
+        } catch (err) {
+            return handler.respF(res, null, err.message)
+        }
+    }
+
+    generateReport = async (req, res) => {
+       let { body } = req;
+
+        try {
+            let result = await generateEmployeeReport(body);
             return handler.respS(res, result);
         } catch (err) {
             return handler.respF(res, null, err.message)

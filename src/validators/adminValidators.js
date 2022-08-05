@@ -18,6 +18,10 @@ const deactivateEmployeeSchema = Joi.object({
     email: Joi.string().email().lowercase().required()
 });
 
+const employeeReportSchema = Joi.object({
+    employee: Joi.number().required()
+});
+
 const viewEmployeeSchema = Joi.object({
     employee: Joi.number().required()
 });
@@ -45,5 +49,6 @@ module.exports = {
     deactivateEmployeeSchema,
     viewEmployeeSchema,
     listEmployeesSchema,
-    updateEmployeeSchema
+    updateEmployeeSchema,
+    employeeReportSchema
 };

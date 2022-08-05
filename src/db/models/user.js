@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Timeoff, {foreignKey: { allowNull: false, name: 'userId'}});
+      this.hasMany(models.Request, {foreignKey: { allowNull: false, name: 'userId'}});
       this.hasOne(models.Salary, {foreignKey: { allowNull: false, name: 'userId'}});
       this.belongsTo(models.Department, {foreignKey: {allowNull: false, name: 'departmentId' }})
 

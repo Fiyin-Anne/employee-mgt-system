@@ -98,8 +98,58 @@ const updateEmployeeDetails = async (data) => {
     }
 }
 
-// const generateReport 
+const generateEmployeeReport = async (data) => {
+    //return profile, payslip, number of leaves taken, requests
+    try {
+        const { employee } = data;
+        delete data.employee;
+
+        const report = await db.User.findByPk(employee, { 
+            include: [
+                {
+                    model: db.Request,
+                    attributes: ['meta', 'status'],
+                    raw: true
+                },
+                {
+                    model: db.Timeoff,
+                    attributes: ['type', 'duration', 'status', 'end_date'],
+                    raw: true
+                },
+                {
+                    model: db.Salary,
+                    attributes: ['monthly', 'yearly'],
+                    raw: true
+                }
+            ]
+        
+        });
+        
+        if(!report) throw new Error('User not found.');
+
+        // return salary info, timeoff info
+        const {id, name, surname, title, department, type, status, updatedAt } = report;
+        let response = {
+            Profile: {
+                id, 
+                name, 
+                surname,
+                title, 
+                department, 
+                type, 
+                status,
+                updatedAt
+            },
+            PaySlip: report.toJSON().Salary,
+            Update_Requests: report.toJSON().Requests,
+            Timeoff: report.toJSON().Timeoffs
+        };
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
 
 module.exports = {
-    addNewEmployee, listEmployees, viewEmployeeDetails, deactivateEmployee, updateEmployeeDetails
+    addNewEmployee, listEmployees, viewEmployeeDetails, deactivateEmployee, updateEmployeeDetails, generateEmployeeReport
 }

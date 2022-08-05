@@ -7,20 +7,20 @@ const getProfile = async (data) => {
 
         //check if id exists in user db
         if(typeof userId !== 'number') throw new Error('User ID must be a number.')
-        const existingUser = await db.User.findOne({
-            where: { id: userId },
-            raw: true,
+        const existingUser = await db.User.findByPk(userId ,{
+            // raw: true,
+            attributes: ['id', 'name', 'surname', 'title', 'departmentId', 'role', 'status', 'createdAt'],
             include: [
                 {
                     model: db.Salary,
                     attributes: ['monthly', 'yearly'],
-                    raw: true
+                    // raw: true
                 },
                 {
                     model: db.Timeoff,
                     as: 'Timeoffs',
                     attributes: ['type', 'duration', 'start_date', 'end_date', 'status'],
-                    raw: true
+                    // raw: true
 
                 }
             ],
@@ -28,11 +28,7 @@ const getProfile = async (data) => {
 
         if(!existingUser) throw new Error('User not found');
 
-        const profile = Object.assign({}, existingUser);
-        delete profile.password;
-        delete profile.accesstk;
-
-        return profile;
+        return existingUser;
     } catch (err) {
         let message = err.message || "Unable to get profile."
         throw new Error(message)
