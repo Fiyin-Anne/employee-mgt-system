@@ -1,0 +1,42 @@
+{
+  "name": "employee-mgt-system",
+  "version": "1.0.0",
+  "description": "An employee management system. Like BambooHR, but cooler :)",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fiyin-Anne/employee-mgt-system.git"
+  },
+  "author": "Fiyin Akinsiku",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fiyin-Anne/employee-mgt-system/issues"
+  },
+  "homepage": "https://github.com/Fiyin-Anne/employee-mgt-system#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.19",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "rxjs": "^7.5.6",
+    "sequelize": "^6.21.3"
+  },
+  "devDependencies": {
+    "circular-json": "^0.5.9",
+    "i": "^0.3.7",
+    "npm": "^8.16.0"
+  }
+}
